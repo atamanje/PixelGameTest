@@ -1,1 +1,1 @@
-msbuild SuperLuminalFlightTraker.sln /p:Configuration=Debug /p:Platform=x64
+msbuild PixelGameTest.sln /p:Configuration=Debug /p:Platform=x64

@@ -1,16 +1,21 @@
 #pragma once
+#include <memory>
+
+class GameManager;
 
 class Application
 {
 public:
-	Application(const char* title, int height, int width);
-	~Application();
-	void Run();
+    Application(const char* title, int width, int height);
+    ~Application();
+    void Run();
 
 private:
-	const char* m_title;
-	int m_height;
-	int m_width;
+    const char* m_title;
+    int m_width;
+    int m_height;
 
-	void RenderGlobalMenuBar();
+    std::unique_ptr<GameManager> m_gameManager;
+
+    void RenderGlobalMenuBar();
 };

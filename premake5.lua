@@ -1,6 +1,9 @@
-workspace "SuperLuminalFlightTraker"
+workspace "PixelGameTest"
     architecture "x64"
-    startproject "Super Luminal Flight Traker"
+    startproject "PixelGameTest"
+    multiprocessorcompile "On"
+    editandcontinue "Off"
+    buildoptions { "/FS" }
 
     configurations { "Debug", "Release" }
 
@@ -11,9 +14,6 @@ workspace "SuperLuminalFlightTraker"
     IncludeDir["GLFW"] = "vendor/glfw/include"
     IncludeDir["Glad"] = "vendor/glad/include"
     IncludeDir["ImGui"] = "vendor/imgui"
-    IncludeDir["ImPlot"] = "vendor/implot"
-    IncludeDir["Curl"] = "vendor/curl/include"
-    IncludeDir["JSON"] = "vendor/json/include"
     IncludeDir["GTest"] = "vendor/googletest/googletest/include"
 
 -- Project: GLFW (Build from Source)
@@ -32,9 +32,9 @@ project "GLFW"
         "vendor/glfw/src/context.c",
         "vendor/glfw/src/init.c",
         "vendor/glfw/src/input.c",
-		"vendor/glfw/src/win32_module.c",
+        "vendor/glfw/src/win32_module.c",
         "vendor/glfw/src/monitor.c",
-		"vendor/glfw/src/platform.c",
+        "vendor/glfw/src/platform.c",
         "vendor/glfw/src/vulkan.c",
         "vendor/glfw/src/window.c"
     }
@@ -53,18 +53,18 @@ project "GLFW"
             "vendor/glfw/src/wgl_context.c",
             "vendor/glfw/src/egl_context.c",
             "vendor/glfw/src/osmesa_context.c",
-			
-			"vendor/glfw/src/null_init.c",
-			"vendor/glfw/src/null_joystick.c",
-			"vendor/glfw/src/null_monitor.c",
-			"vendor/glfw/src/null_window.c"
+            
+            "vendor/glfw/src/null_init.c",
+            "vendor/glfw/src/null_joystick.c",
+            "vendor/glfw/src/null_monitor.c",
+            "vendor/glfw/src/null_window.c"
         }
-		defines {
-			"_GLFW_WIN32",
-			"_CRT_SECURE_NO_WARNINGS",
-			"ENABLE_VC_PROJECT_CACHE_LOGGING"
-		}
-		
+        defines {
+            "_GLFW_WIN32",
+            "_CRT_SECURE_NO_WARNINGS",
+            "ENABLE_VC_PROJECT_CACHE_LOGGING"
+        }
+        
     filter "system:linux"
         pic "On"
         systemversion "latest"
@@ -91,75 +91,32 @@ project "GLFW"
         runtime "Release"
         optimize "On"
 
--- Project: Curl (build from source)
-project "Curl"
+-- Project: glad (build from source)
+project "glad"
     kind "StaticLib"
     language "C"
     staticruntime "on"
     
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-
-    includedirs {
-        "vendor/curl/include",
-        "vendor/curl/lib"
-    }
-
-    files {
-        "vendor/curl/lib/**.c",
-        "vendor/curl/lib/**.h",
-    }
-	
-	removefiles {
-        "vendor/curl/lib/ldap.c",
-        "vendor/curl/lib/ldaps.c",
-        "vendor/curl/lib/openldap.c",
-        "vendor/curl/lib/vtls/openssl.c",
-        "vendor/curl/lib/vtls/mbedtls.c",
-        "vendor/curl/lib/vtls/wolfssl.c",
-    }
-
-    defines {
-        "BUILDING_LIBCURL",
-        "CURL_STATICLIB",
-        "USE_SCHANNEL",
-        "USE_WINDOWS_SSPI",
-        "USE_WIN32_IDN",
-		"CURL_DISABLE_LDAP",
-        "CURL_DISABLE_LDAPS",
-        "WANT_IDN_PROTOTYPES",
-        "_CRT_SECURE_NO_WARNINGS"
-    }
-
-    filter "system:windows"
-        systemversion "latest"
-
--- Project: glad (build from source)
-project "glad"
-    kind "StaticLib"
-    language "C"
-    staticruntime "on"
-	
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-	
+    
     files { "vendor/glad/src/glad.c" }
     includedirs { "vendor/glad/include" }
     filter "system:windows"
         systemversion "latest"
-		
+        
 -- Project: imgui (build from source)
 project "imgui"
     kind "StaticLib"
     language "C++"
-	staticruntime "on"
-	
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    staticruntime "on"
+    
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-	
-        files {
+    
+    files {
         "vendor/imgui/imgui.cpp",
-        "vendor/imgui/imgui_demo.cpp", --optional
+        "vendor/imgui/imgui_demo.cpp",
         "vendor/imgui/imgui_draw.cpp",
         "vendor/imgui/imgui_tables.cpp",
         "vendor/imgui/imgui_widgets.cpp",
@@ -170,29 +127,9 @@ project "imgui"
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.ImGui}",
     }
-	
-	links { "GLFW" }
-	
-	filter "system:windows"
-        systemversion "latest"
-
--- Project: implot (build from source)
-project "implot"
-    kind "StaticLib"
-    language "C++"
-	staticruntime "on"
-	
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-	
-    files {
-        "vendor/implot/implot.cpp",
-        "vendor/implot/implot_items.cpp"
-    }
-    includedirs {
-        "%{IncludeDir.ImGui}",
-		"%{IncludeDir.ImPlot}",
-    }
+    
+    links { "GLFW" }
+    
     filter "system:windows"
         systemversion "latest"
 
@@ -226,7 +163,7 @@ project "gtest"
         optimize "On"
 
 -- Project: Main Application
-project "Super Luminal Flight Traker"
+project "PixelGameTest"
     location "."
     kind "WindowedApp"
     language "C++"
@@ -235,10 +172,10 @@ project "Super Luminal Flight Traker"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-	
-	--Precompiled header
-	pchheader "super_luminal_pch.h"
-	pchsource "src/super_luminal_pch.cpp"	
+    
+    --Precompiled header
+    pchheader "pch.h"
+    pchsource "src/pch.cpp" 
 
     files {
         "./src/**.h",
@@ -251,29 +188,23 @@ project "Super Luminal Flight Traker"
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
-        "%{IncludeDir.ImGui}/backends",
-		"%{IncludeDir.ImPlot}",
-		"%{IncludeDir.Curl}",
-		"%{IncludeDir.JSON}"
+        "%{IncludeDir.ImGui}/backends"
     }
 
     links {
         "GLFW",
         "opengl32",
-		"gdi32",
+        "gdi32",
         "user32",
         "kernel32",
         "shell32",
-		"Curl",
-        "ws2_32",
-        "crypt32",
-        "wldap32",
-		"secur32",
-        "normaliz",
         "advapi32",
-		"glad",
-		"imgui",
-		"implot",
+        "glad",
+        "imgui"
+    }
+
+    postbuildcommands {
+        "{COPYDIR} %{wks.location}/resources %{cfg.targetdir}/resources"
     }
 
     filter "system:windows"
@@ -282,8 +213,7 @@ project "Super Luminal Flight Traker"
         
         defines { 
             "_GLFW_WIN32", 
-            "_CRT_SECURE_NO_WARNINGS",
-            "CURL_STATICLIB"
+            "_CRT_SECURE_NO_WARNINGS"
         }
 
     filter "configurations:Debug"
@@ -306,15 +236,23 @@ project "Tests"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-	
-	--Precompiled header
-	pchheader "super_luminal_pch.h"
-	pchsource "src/super_luminal_pch.cpp"
+    
+    --Precompiled header
+    pchheader "pch.h"
+    pchsource "src/pch.cpp"
 
     files {
         "./tests/**.cpp",
-        "./src/PhysicsCalculations.cpp",
-        "./src/super_luminal_pch.cpp",
+        "./src/Camera2D.cpp",
+        "./src/DialogueSystem.cpp",
+        "./src/Entity.cpp",
+        "./src/Character.cpp",
+        "./src/Player.cpp",
+        "./src/NPC.cpp",
+        "./src/World.cpp",
+        "./src/AnimatedSprite.cpp",
+        "./src/Texture2D.cpp",
+        "./src/pch.cpp"
     }
 
     includedirs {
@@ -323,17 +261,20 @@ project "Tests"
         "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.ImGui}/backends",
-		"%{IncludeDir.ImPlot}",
         "%{IncludeDir.GTest}"
     }
 
     links {
-        "gtest"
+        "gtest",
+        "imgui",
+        "GLFW",
+        "glad",
+        "opengl32"
     }
 
     filter "system:windows"
         systemversion "latest"
-		
+        
         defines { 
             "_CRT_SECURE_NO_WARNINGS"
         }
