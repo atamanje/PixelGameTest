@@ -1,0 +1,24 @@
+App/App.vcxproj
+App/App.vcxproj.filters
+App/App.vcxproj.user
+App/imgui.ini
+/bin-int
+/.vs
+/bin
+GlobalPurchasingPower.sln
+Global PPP.vcxproj
+Global PPP.vcxproj.filters
+Global PPP.vcxproj.user
+imgui.ini
+Curl.vcxproj.filters
+Curl.vcxproj
+glad.vcxproj
+imgui.vcxproj
+imgui.vcxproj.filters
+implot.vcxproj
+/obj
+*.vcxproj
+*.vcxproj
+*.filters
+vendor/glfw/GLFW.vcxproj.filters
+SuperLuminalFlightTraker.sln
